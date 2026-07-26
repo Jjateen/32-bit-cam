@@ -1,0 +1,92 @@
+{
+  "signal": [
+    {
+      "name": "clk",
+      "wave": "P............",
+      "data": []
+    },
+    {
+      "name": "rst_n",
+      "wave": "0.1..........",
+      "data": []
+    },
+    {
+      "name": "we",
+      "wave": "0..1...0..10.",
+      "data": []
+    },
+    {
+      "name": "winvalidate",
+      "wave": "0.........10.",
+      "data": []
+    },
+    {
+      "name": "waddr",
+      "wave": "=...====..=..",
+      "data": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "0",
+        "2"
+      ]
+    },
+    {
+      "name": "wdata",
+      "wave": "=..=====.....",
+      "data": [
+        "0",
+        "DEADBEEF",
+        "12345678",
+        "CAFEBABE",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "name": "search",
+      "wave": "=.......===..",
+      "data": [
+        "DEADBEEF",
+        "CAFEBABE",
+        "FFFFFFFF",
+        "CAFEBABE"
+      ]
+    },
+    {
+      "name": "match",
+      "wave": "0..1.....0...",
+      "data": []
+    },
+    {
+      "name": "match_index",
+      "wave": "=.......==...",
+      "data": [
+        "0",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "name": "match_onehot",
+      "wave": "=..=....==...",
+      "data": [
+        "0",
+        "1",
+        "4",
+        "0"
+      ]
+    }
+  ],
+  "config": {
+    "hscale": 2
+  },
+  "head": {
+    "text": "4-entry 32-bit CAM: fill, hit, miss, invalidate",
+    "tick": 0
+  },
+  "foot": {
+    "text": "generated from cam_wave.vcd; writes are registered, so an entry written in one cycle first matches in the next"
+  }
+}

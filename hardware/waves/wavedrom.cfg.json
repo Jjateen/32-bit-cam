@@ -1,0 +1,50 @@
+{
+  "filter": [
+    "tb_cam_wave.clk",
+    "tb_cam_wave.rst_n",
+    "tb_cam_wave.we",
+    "tb_cam_wave.winvalidate",
+    "tb_cam_wave.waddr[1:0]",
+    "tb_cam_wave.wdata[31:0]",
+    "tb_cam_wave.search[31:0]",
+    "tb_cam_wave.match",
+    "tb_cam_wave.match_index[1:0]",
+    "tb_cam_wave.match_onehot[3:0]"
+  ],
+  "clocks": [
+    "tb_cam_wave.clk"
+  ],
+  "signal": {
+    "tb_cam_wave.clk": {
+      "name": "clk"
+    },
+    "tb_cam_wave.rst_n": {
+      "name": "rst_n"
+    },
+    "tb_cam_wave.we": {
+      "name": "we"
+    },
+    "tb_cam_wave.winvalidate": {
+      "name": "winvalidate"
+    },
+    "tb_cam_wave.waddr[1:0]": {
+      "name": "waddr"
+    },
+    "tb_cam_wave.wdata[31:0]": {
+      "name": "wdata"
+    },
+    "tb_cam_wave.search[31:0]": {
+      "name": "search"
+    },
+    "tb_cam_wave.match": {
+      "name": "match"
+    },
+    "tb_cam_wave.match_index[1:0]": {
+      "name": "match_index"
+    },
+    "tb_cam_wave.match_onehot[3:0]": {
+      "name": "match_onehot"
+    }
+  },
+  "hscale": 2
+}

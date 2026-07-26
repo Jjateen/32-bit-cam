@@ -1,0 +1,7 @@
+*.vvp
+*.vcd
+*.fs
+*.ll
+hardware/fpga/cam.json
+hardware/fpga/cam_pnr.json
+software/build/
