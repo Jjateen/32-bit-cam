@@ -69,6 +69,13 @@ module tb_cam;
         wr(3, 32'hDEAD_BEEF);
         chk(32'hDEAD_BEEF, 1'b1, 2'd0, "duplicate -> lowest idx");
 
+        // the write port is registered: a key presented on wdata and search in
+        // the same cycle must not match until the clock edge has stored it
+        @(negedge clk); we = 1; winvalidate = 0; waddr = 2'd2; wdata = 32'h5A5A_5A5A;
+        chk(32'h5A5A_5A5A, 1'b0, '0,   "write+search same cycle -> miss");
+        @(negedge clk); we = 0;
+        chk(32'h5A5A_5A5A, 1'b1, 2'd2, "matches the cycle after");
+
         $display("\n%0d checks, %0d errors", checks, errors);
         if (errors == 0) $display("ALL PASS"); else $display("FAILED");
         $finish;

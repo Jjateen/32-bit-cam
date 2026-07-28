@@ -4,7 +4,8 @@
 module cam #(
     parameter int DEPTH = 4,
     parameter int WIDTH = 32,
-    localparam int IDXW = $clog2(DEPTH)
+    // $clog2(1) is 0, which would make the index ports [-1:0]; floor at 1 bit
+    localparam int IDXW = (DEPTH <= 1) ? 1 : $clog2(DEPTH)
 )(
     input  logic            clk,
     input  logic            rst_n,        // active-low async reset

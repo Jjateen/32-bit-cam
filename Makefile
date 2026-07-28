@@ -18,12 +18,13 @@ FIRST_EDGE_PS := 5000
 WINDOW_PS     := 130000
 NLINES        := 8              # one full pass of the key list
 
-.PHONY: help sim waves bitstream flash verify-hw pass count verify-pass verify clean
+.PHONY: help sim waves bitstream report flash verify-hw pass count verify-pass verify clean
 
 help:
 	@echo "sim          run the CAM testbench"
 	@echo "waves        generate the timing diagram from the simulation VCD"
 	@echo "bitstream    synthesise and pack for the Tang Nano 9K"
+	@echo "report       record utilisation and timing to assets/fpga-report.txt"
 	@echo "flash        load the bitstream onto the board"
 	@echo "verify-hw    diff the board's UART output against simulation"
 	@echo "pass         build the LLVM plugin"
@@ -81,6 +82,16 @@ $(FPGA)/cam.fs: $(FPGA)/cam_pnr.json
 	gowin_pack -d $(FAMILY) -o $@ $<
 
 bitstream: $(FPGA)/cam.fs
+
+# Capture the utilisation and timing lines the tools print, so the numbers
+# quoted in the README are traceable to a build instead of taken on trust.
+report: $(FPGA)/cam.json
+	@{ echo "nextpnr-himbaechel, $(DEVICE)"; echo; \
+	   nextpnr-himbaechel --json $< --write /dev/null --device "$(DEVICE)" \
+	     --vopt family=$(FAMILY) --vopt cst=$(FPGA)/cam_demo.cst 2>&1 \
+	   | grep -E "Device utilisation|:[[:space:]]+[1-9][0-9]*/|Max frequency"; } \
+	  > assets/fpga-report.txt
+	@cat assets/fpga-report.txt
 
 # SRAM programming: lost on unplug. `make flash PERSIST=1` writes flash instead.
 flash: $(FPGA)/cam.fs

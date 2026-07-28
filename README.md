@@ -13,7 +13,7 @@ All open-source tools.
 Makefile        every build and check target (run `make` for the list)
 hardware/
   cam.sv        4-entry, 32-bit CAM
-  tb_cam.sv     testbench, 10 self-checking assertions
+  tb_cam.sv     testbench, 12 self-checking assertions
   waves/        timing diagram, generated from the simulation VCD
   fpga/         the same CAM running on a Tang Nano 9K
 software/
@@ -33,7 +33,9 @@ protected set in a single cycle.
 ## Hardware: the module
 
 [`hardware/cam.sv`](hardware/cam.sv) is parameterised on depth and width and
-defaults to 4 x 32.
+defaults to 4 x 32. Index widths are floored at one bit, since `$clog2(1)` is 0
+and would otherwise give the index ports a `[-1:0]` range; `DEPTH` of 1, 3 and 8
+all elaborate.
 
 Write port (registered): `we`, `waddr`, `wdata`, `winvalidate`.
 Search port (combinational): `search` in; `match`, `match_index`, `match_onehot` out.
@@ -59,13 +61,18 @@ PASS  old value gone             key=12345678  match=0 idx=0
 PASS  new value hit              key=99999999  match=1 idx=1
 PASS  invalidated -> miss        key=cafebabe  match=0 idx=0
 PASS  duplicate -> lowest idx    key=deadbeef  match=1 idx=0
+PASS  write+search same cycle -> miss key=5a5a5a5a  match=0 idx=0
+PASS  matches the cycle after    key=5a5a5a5a  match=1 idx=2
 
-10 checks, 0 errors
+12 checks, 0 errors
 ALL PASS
 ```
 
 The cases cover an empty CAM, a hit on every entry, an unknown key, overwriting an
-entry so the old key stops matching, invalidation, and duplicate-key priority.
+entry so the old key stops matching, invalidation, and duplicate-key priority. The
+last pair pins down the registered write port: presenting a key on `wdata` and
+`search` in the same cycle must miss, and match only once the clock edge has
+stored it.
 
 ## Hardware: timing
 
@@ -105,7 +112,9 @@ re-run `make flash` after replugging, or `make flash PERSIST=1` to write it to
 the board's flash instead.
 
 Cost on the device: 355 LUT4 (4% of the part), 137 flip-flops, timing closed at
-60 MHz against the 27 MHz clock.
+60 MHz against the 27 MHz clock. Those come from
+[`assets/fpga-report.txt`](assets/fpga-report.txt), which `make report` writes
+from the place-and-route output.
 
 ### Verification against simulation
 

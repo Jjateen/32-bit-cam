@@ -1,0 +1,16 @@
+nextpnr-himbaechel, GW1NR-LV9QN88PC6/I5
+
+Info: Device utilisation:
+Info: 	                 VCC:       1/      1   100%
+Info: 	                 IOB:       9/    276     3%
+Info: 	                LUT4:     355/   8640     4%
+Info: 	           MUX2_LUT5:      78/   4320     1%
+Info: 	           MUX2_LUT6:      26/   2160     1%
+Info: 	           MUX2_LUT7:       8/   1080     0%
+Info: 	           MUX2_LUT8:       3/   1080     0%
+Info: 	                 ALU:      76/   6480     1%
+Info: 	                 GND:       1/      1   100%
+Info: 	                 DFF:     137/   6480     2%
+Info: 	                 GSR:       1/      1   100%
+Info: Max frequency for clock 'u_cam.clk': 76.28 MHz (PASS at 12.00 MHz)
+Info: Max frequency for clock 'u_cam.clk': 59.98 MHz (PASS at 12.00 MHz)
